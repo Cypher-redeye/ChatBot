@@ -14,23 +14,28 @@ lemmatizer = WordNetLemmatizer()
 try:
     with open('../data/intents.json') as file:
         intents = json.load(file)
+        print("DEBUG: Loaded ../data/intents.json")
 except FileNotFoundError:
     with open('data/intents.json') as file:
         intents = json.load(file)
+        print("DEBUG: Loaded data/intents.json")
 
 # Load model and pickles
 # Check current directory then src directory
 if os.path.exists('chatbot_model.h5'):
+    print("DEBUG: Loading artifacts from current directory")
     words = pickle.load(open('words.pkl', 'rb'))
     classes = pickle.load(open('classes.pkl', 'rb'))
     model = tf.keras.models.load_model('chatbot_model.h5')
 elif os.path.exists('src/chatbot_model.h5'):
+    print("DEBUG: Loading artifacts from src directory")
     words = pickle.load(open('src/words.pkl', 'rb'))
     classes = pickle.load(open('src/classes.pkl', 'rb'))
     model = tf.keras.models.load_model('src/chatbot_model.h5')
 else:
     # Fallback to absolute assumption or error
     print("Error: Could not find model files.")
+    print(f"CWD: {os.getcwd()}")
     exit()
 
 
@@ -58,16 +63,17 @@ def get_response(intents_list, intents_json):
             break
     return result
 
-print("GO! Bot is running! (type 'quit' to exit)")
+if __name__ == "__main__":
+    print("GO! Bot is running! (type 'quit' to exit)")
 
-while True:
-    message = input("")
-    if message.lower() == "quit":
-        break
-    
-    ints = predict_class(message)
-    if ints:
-        res = get_response(ints, intents)
-        print(res)
-    else:
-        print("I didn't understand that.")
+    while True:
+        message = input("")
+        if message.lower() == "quit":
+            break
+        
+        ints = predict_class(message)
+        if ints:
+            res = get_response(ints, intents)
+            print(res)
+        else:
+            print("I didn't understand that.")
