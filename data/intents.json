@@ -1,174 +1,307 @@
 {
   "intents": [
     {
-      "tag": "greeting",
+      "tag": "greet",
       "patterns": [
         "Hi",
-        "How are you",
-        "Is anyone there?",
         "Hello",
-        "Good day",
-        "Whats up"
+        "Hey",
+        "Good morning",
+        "Good evening",
+        "What's up?",
+        "Hey there",
+        "hi",
+        "how's everything?",
+        "hello there"
       ],
       "responses": [
-        "Hello! Welcome to our car auction platform.",
-        "Hi there! Ready to find your dream car?",
-        "Greetings! How can I help you with buying or selling today?"
-      ],
-      "context_set": ""
+        "Hi, how can I assist you today?"
+      ]
     },
     {
       "tag": "goodbye",
       "patterns": [
-        "cya",
+        "Bye",
+        "Thank you",
         "See you later",
         "Goodbye",
-        "I am Leaving",
-        "Have a Good day"
-      ],
-      "responses": [
-        "Happy driving!",
-        "See you later! Check back for new listings.",
-        "Goodbye! Drive safe."
-      ],
-      "context_set": ""
-    },
-    {
-      "tag": "thanks",
-      "patterns": [
         "Thanks",
-        "Thank you",
-        "That's helpful",
-        "Thank's a lot!"
+        "Catch you later",
+        "have a nice day",
+        "All good"
       ],
       "responses": [
-        "You're welcome! Happy to help.",
-        "No problem at all.",
-        "My pleasure!"
-      ],
-      "context_set": ""
+        "Have a nice day!",
+        "Goodbye",
+        "Goodbye! 👋 Come back to AutoHub.lk anytime for great deals."
+      ]
     },
     {
-      "tag": "sell_car",
+      "tag": "ask_brand_model",
       "patterns": [
-        "I want to sell my car",
-        "How do I list my vehicle?",
-        "Selling process",
-        "Submit a car",
-        "Can I sell my truck?"
+        "I’m looking for a BMW",
+        "Do you have Toyota cars?",
+        "Any Nissan Leaf?",
+        "Show me a Honda Fit",
+        "Tell me about Suzuki Wagon R",
+        "Looking for a Toyota Prius",
+        "Is BMW X5 available?",
+        "Have any Mitsubishi Montero?",
+        "What are the BMWs available",
+        "What Toyota vehicles available right now",
+        "Suggest me BYDs up for grab",
+        "Peugeot 406 is in sale?",
+        "Show me Honda cars",
+        "Can I get a Nissan Sunny?",
+        "What Suzuki cars available currently?",
+        "Do you have Toyota Vitz?",
+        "I’m looking for a BMW 520d",
+        "Show me a Nissan Sunny",
+        "Tell me about Mitsubishi Montero",
+        "Is Honda Fit available?",
+        "Can I get a Suzuki Wagon R?",
+        "Any listings for Toyota Prius?",
+        "Show me BMW X5s",
+        "Do you have Mazda Axela?",
+        "Looking for a Honda Civic",
+        "Is there any Toyota CHR?",
+        "I want a Nissan Leaf",
+        "Got any BMW 316i?",
+        "Do you have Proton Saga?",
+        "Looking for Honda Grace",
+        "Do you have BMW X5",
+        "Do you have toyota vitz",
+        "what are the available Honda Civic?",
+        "can you show me honda fit",
+        "looking for a used honda civic",
+        "What is the price of a Toyota Vitz?",
+        "What is the price of a Toyota AXIO?",
+        "What is the price of a BMW"
       ],
       "responses": [
-        "To sell your car, click the 'Sell' in the navigation bar. You'll need to submit photos and details for approval.",
-        "Listing is easy! Just submit your car's VIN and photos. Our team will review it shortly.",
-        "We are looking for cool, enthusiast cars! Submit yours via the 'Sell' page to get started."
-      ],
-      "context_set": ""
+        "We have several {brand} {model} listings. Here's what I found:"
+      ]
     },
     {
-      "tag": "buy_car",
+      "tag": "ask_cheapest",
       "patterns": [
-        "How do I buy a car?",
-        "How does bidding work?",
-        "I want to bid",
-        "Registration for bidding",
-        "Buying process"
+        "what is the cheapest car",
+        "show me the cheapest vehicle",
+        "what is the cheapest Toyota car?",
+        "which is the lowest priced car?",
+        "any cheap SUV?",
+        "cheapest vehicle available?",
+        "show cheapest Nissan car",
+        "which brand has cheapest vehicles?"
       ],
       "responses": [
-        "To buy, you first need to register and add a valid credit card. Then you can place bids on any live auction.",
-        "Bidding is simple! Register an account, find a car you like, and place your bid.",
-        "You can bid on any live listing. If you win, we'll connect you with the seller to finalize the deal."
-      ],
-      "context_set": ""
+        "Here is the lowest priced vehicle available:"
+      ]
     },
     {
-      "tag": "fees",
+      "tag": "ask_price_range",
       "patterns": [
-        "What are the fees?",
-        "How much does it cost to list?",
-        "Buyer's premium",
-        "Seller fees",
-        "Is it free to sell?"
+        "Show me cars under 5 million",
+        "Any vehicle under five million?",
+        "What do you have for 3M to 5M?",
+        "Vehicles between three million and five million",
+        "Cars under fifty lakhs",
+        "Show cars under 5000000",
+        "Show vehicles below 45 lakhs",
+        "What cars are in 2 million range?",
+        "Show me cars between 2.5 and 4.5 million",
+        "Suggest me a vehicle under 5000000",
+        "What are the SUVs under 1000000?",
+        "What are the BMWs under 50 million",
+        "any BMW under 4 million",
+        "show me Honda cars under 8 million",
+        "are there Toyota cars below 3 million",
+        "any Nissan vehicles under 5 million",
+        "what Suzuki cars between 2 and 5 million",
+        "do you have any BYD under 6 million",
+        "cars under 10 million from Toyota",
+        "any vehicle from BMW below 7 million",
+        "need Toyota cars below 5M",
+        "show me cars between 2 million and 4 million",
+        "suggest me vehicles from 3M to 6M",
+        "do you have Toyota cars between 4M and 7M?",
+        "show Honda cars from 5 million to 8 million",
+        "are there any BMWs between 3 million and 5 million?",
+        "I want to see cars priced from 6M to 10M",
+        "what Suzuki vehicles are there between 2.5 and 5.5 million",
+        "list me Nissan cars between 4000000 and 6000000",
+        "any BYD cars between 5 and 7 million?",
+        "need some Mitsubishi vehicles from 2 million to 3.5 million",
+        "show all Toyota models from 3M to 5M",
+        "what Peugeot cars are available between 4M and 6M?",
+        "can you list Honda cars in the 2 to 6 million range?",
+        "what are the vehicles between 3M to 7M?",
+        "which BMWs are available in 2 million to 5 million range?",
+        "list cars priced from 4,000,000 to 6,000,000",
+        "what vehicles fall within 3M - 6M price range?",
+        "get me Toyotas in the 2.5 to 4.5M range",
+        "do you have Nissan cars priced between 3M and 5M?",
+        "any available vehicles between 3M and 6M",
+        "I'm looking for an SUV under 10 million",
+        "Show me sedans below 5 million",
+        "Are there any hatchbacks between 2M and 4M?",
+        "List crossovers from 3M to 6M",
+        "Do you have any vans under 3 million?",
+        "Suggest me trucks below 7 million",
+        "What 4x4s are available under 6 million?",
+        "Can I see SUVs between 8M and 12M?",
+        "Show me available wagons under 5M",
+        "List me some hatchbacks priced from 2M to 4.5M",
+        "Need a sedan in the 3 to 6 million range",
+        "Can I get a crossover under 9 million?",
+        "Any trucks between 6 million and 10 million?",
+        "What are the cheapest SUVs under 8M?",
+        "I want an SUV from 4M to 9M",
+        "Suggest me a Toyota SUV under 10 million",
+        "Can I get a Honda crossover under 8 million",
+        "List Mitsubishi vans between 2 and 5 million",
+        "Show BMW sedans under 6 million",
+        "I want a Suzuki hatchback below 4 million",
+        "Any available 4x4s under 7M?",
+        "Do you have Nissan trucks between 3M to 6M?",
+        "Show electric cars under 5M",
+        "Looking for a petrol SUV under 9 million",
+        "could you suggest me some toyota cars under 5 million rupees"
       ],
       "responses": [
-        "Sellers list for FREE! Buyers pay a 4.5% fee on top of the final sale price (capped at $4,500).",
-        "Listing is completely free for sellers. Buyers pay a 4.5% buyer's fee, with a minimum of $225 and a maximum of $4,500.",
-        "No fees for sellers! Buyers pay 4.5% of the winning bid."
-      ],
-      "context_set": ""
+        "Here are some vehicles within your budget:"
+      ]
     },
     {
-      "tag": "shipping",
+      "tag": "ask_by_fuel",
       "patterns": [
-        "Do you offer shipping?",
-        "How much is transport?",
-        "Can you ship the car to me?",
-        "Shipping quote"
+        "Do you have diesel cars?",
+        "Any petrol vehicles?",
+        "Show electric cars",
+        "What diesel variants are available?",
+        "Is there any hybrid model?",
+        "Can I see diesel engine cars?",
+        "I want a petrol car"
       ],
       "responses": [
-        "We partner with reliable shipping carriers. You can get a shipping quote directly on the listing page.",
-        "Yes, we can help arrange shipping! Check the 'Shipping Quote' calculator on any auction listing.",
-        "Shipping is available for all cars. The cost depends on distance and vehicle type."
-      ],
-      "context_set": ""
+        "These are the vehicles with {fuel_type} engines:"
+      ]
     },
     {
-      "tag": "reserve",
+      "tag": "ask_by_vehicle_type",
       "patterns": [
-        "What is a reserve price?",
-        "No reserve",
-        "Is there a reserve?",
-        "What happens if reserve isn't met?"
+        "Show me SUVs",
+        "I want a van",
+        "Do you have any hatchbacks?",
+        "Looking for a sedan",
+        "Any 4x4s available?",
+        "Do you have trucks?",
+        "Can I see crossover vehicles?"
       ],
       "responses": [
-        "A reserve is the minimum price the seller will accept. 'No Reserve' means the car sells to the highest bidder regardless of price.",
-        "If a reserve isn't met, the high bidder gets first dibs to negotiate with the seller.",
-        "Some auctions have a reserve price hidden to bidders. If it's 'No Reserve', the highest bid wins!"
-      ],
-      "context_set": ""
+        "Here are some {vehicle_type}s available:"
+      ]
     },
     {
-      "tag": "contact",
+      "tag": "ask_leasing",
       "patterns": [
-        "Contact support",
-        "Phone number",
-        "Email address",
-        "How to reach you",
-        "Customer service"
+        "Can I lease a car?",
+        "Is leasing available?",
+        "What about financing options?",
+        "Can I buy this on loan?",
+        "Any installment plans?",
+        "Is a lease possible?",
+        "Can I get vehicle leasing?"
       ],
       "responses": [
-        "You can reach our support team at support@carsandbids.com (example).",
-        "Need help? Email us at hello@example.com."
-      ],
-      "context_set": ""
+        "Please contact the vehicle owner directly for leasing details."
+      ]
     },
     {
-      "tag": "jokes",
+      "tag": "ask_by_location",
       "patterns": [
-        "Tell me a joke",
-        "Say something funny",
-        "Make me laugh"
+        "Show me cars in Galle",
+        "Find vehicles available in Colombo",
+        "Do you have any cars in Kandy?",
+        "List cars available in Negombo",
+        "Are there any cars for sale in Kurunegala?",
+        "Vehicles in Matara",
+        "Show cars near Galle",
+        "Find me cars in Anuradhapura"
       ],
       "responses": [
-        "Why did the car get a flat tire? Because there was a fork in the road!",
-        "What kind of car does a Jedi drive? A Toy-Yoda!",
-        "My car's AC stopped working... now my windows are just frames for the world."
-      ],
-      "context_set": ""
+        "Here are some vehicles available in {location}:"
+      ]
     },
     {
-      "tag": "clever",
+      "tag": "messing_around",
       "patterns": [
-        "You are smart",
-        "Are you real?",
-        "I like you",
-        "Who made you?"
+        "sdasdhasdsadsadsadj",
+        "asdlkasndlas noidbnasoidbpib sad",
+        "whar hjasdahi sadn2wof n24isf",
+        "000000000000",
+        "1323242432634423421",
+        "12123242424",
+        "][]]asdkp`]]]",
+        "asdfasdfasdfasdf",
+        "lolololololol",
+        "alksdjalksdj",
+        "what even is this",
+        "idk just typing",
+        "hahahahajdjdj",
+        "\ud83e\udd14\ud83e\udd14\ud83e\udd14\ud83e\udd2f\ud83e\udd2f\ud83e\udd2f",
+        ".........",
+        "lalalalala",
+        "is this thing alive?",
+        "HELLOOOOOOOOO",
+        "heh heh heh heh",
+        "does this work",
+        "testing testing 123",
+        "blah blah blah",
+        "!!!???!!!",
+        "okokokokokokok",
+        "why are you like this",
+        "you good?",
+        "i am just playing around",
+        "\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02",
+        "just being random",
+        "i pressed all the keys",
+        "bloop bloop beep",
+        "zzzzzzzzzzzzzz",
+        "are you broken?"
       ],
       "responses": [
-        "I'm an AI trained to know everything about cars (well, almost everything).",
-        "I'm virtual, but my love for cars is real.",
-        "Thanks! I try to be the best co-pilot."
+        "You're just messing around huh? \ud83d\ude09 Good luck!"
+      ]
+    },
+    {
+      "tag": "acknowledge_positive",
+      "patterns": [
+        "Great",
+        "Awesome",
+        "Alright",
+        "Nice",
+        "Perfect",
+        "Good",
+        "Cool",
+        "Excellent",
+        "Thanks a lot",
+        "That helped",
+        "Appreciate it"
       ],
-      "context_set": ""
+      "responses": [
+        "Glad to hear that! \ud83d\ude0a Do you need help with anything else?",
+        "Awesome! Let me know if there's anything more I can do.",
+        "Great! Would you like to explore more vehicles or price ranges?",
+        "Cool \ud83d\ude0e I'm here if you need more assistance."
+      ]
+    },
+    {
+      "tag": "fallback",
+      "patterns": [],
+      "responses": [
+        "I'm not sure I understood that. Could you please rephrase?"
+      ]
     }
   ]
 }
