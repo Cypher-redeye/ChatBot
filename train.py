@@ -1,94 +1,57 @@
-import random
 import json
 import pickle
-import numpy as np
-import tensorflow as tf
+import random
 import nltk
-from nltk.stem import WordNetLemmatizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import LabelEncoder
+from preprocessing import clean_up_sentence
 
-# Initialize lemmatizer
-lemmatizer = WordNetLemmatizer()
-
-# Download necessary NLTK data (run once)
+# Download necessary NLTK data
 nltk.download('punkt')
 nltk.download('wordnet')
-nltk.download('omw-1.4') # Often needed for lemmatizer
+nltk.download('omw-1.4')
 nltk.download('punkt_tab')
 
 # Load intents
 try:
-    with open('../data/intents.json') as file:
+    with open('data/intents.json') as file:
         intents = json.load(file)
 except FileNotFoundError:
-    with open('data/intents.json') as file: # Fallback if running from root
+    with open('../data/intents.json') as file:
         intents = json.load(file)
 
-words = []
-classes = []
-documents = []
-ignore_letters = ['?', '!', '.', ',']
+# Prepare training data
+patterns = []
+tags = []
 
-# Preprocess data
 for intent in intents['intents']:
     for pattern in intent['patterns']:
-        word_list = nltk.word_tokenize(pattern)
-        words.extend(word_list)
-        documents.append((word_list, intent['tag']))
-        if intent['tag'] not in classes:
-            classes.append(intent['tag'])
+        patterns.append(pattern)
+        tags.append(intent['tag'])
 
-words = [lemmatizer.lemmatize(word.lower()) for word in words if word not in ignore_letters]
-words = sorted(set(words))
-classes = sorted(set(classes))
+# Encode labels
+le = LabelEncoder()
+y = le.fit_transform(tags)
 
-pickle.dump(words, open('words.pkl', 'wb'))
-pickle.dump(classes, open('classes.pkl', 'wb'))
-
-training = []
-output_empty = [0] * len(classes)
-
-for document in documents:
-    bag = []
-    word_patterns = document[0]
-    word_patterns = [lemmatizer.lemmatize(word.lower()) for word in word_patterns]
-    for word in words:
-        bag.append(1) if word in word_patterns else bag.append(0)
-
-    output_row = list(output_empty)
-    output_row[classes.index(document[1])] = 1
-    training.append([bag, output_row])
-
-random.shuffle(training)
-training = np.array(training, dtype=object)
-
-train_x = list(training[:, 0])
-train_y = list(training[:, 1])
-
-# Build LSTM Model
-# Input shape: (None, len(train_x[0]))
-# We need to reshape for LSTM which expects (samples, time_steps, features)
-# However, standard BoW is 1D per sample. 
-# To use LSTM with BoW, we can reshape to (samples, 1, features)
-train_x = np.array(train_x)
-train_y = np.array(train_y)
-
-# Reshape for LSTM: [samples, time steps, features]
-train_x = np.reshape(train_x, (train_x.shape[0], 1, train_x.shape[1]))
-
-model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.LSTM(128, input_shape=(train_x.shape[1], train_x.shape[2]), return_sequences=True))
-model.add(tf.keras.layers.Dropout(0.5))
-model.add(tf.keras.layers.LSTM(64))
-model.add(tf.keras.layers.Dropout(0.5))
-model.add(tf.keras.layers.Dense(len(train_y[0]), activation='softmax'))
-
-# Compile
-sgd = tf.keras.optimizers.SGD(learning_rate=0.01, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
+# Build Pipeline: TF-IDF -> Logistic Regression
+# We use our custom 'clean_up_sentence' from preprocessing.py as the tokenizer
+pipe = Pipeline([
+    ('vectorizer', TfidfVectorizer(tokenizer=clean_up_sentence, token_pattern=None)), 
+    ('classifier', LogisticRegression(C=10, max_iter=1000))
+])
 
 # Train
-hist = model.fit(train_x, train_y, epochs=200, batch_size=5, verbose=1)
+print("Training model...")
+pipe.fit(patterns, y)
 
-# Save
-model.save('chatbot_model.h5', hist)
-print("Model created and saved")
+# Save artifacts
+print("Saving artifacts...")
+with open('chatbot_model.pkl', 'wb') as f:
+    pickle.dump(pipe, f)
+
+with open('label_encoder.pkl', 'wb') as f:
+    pickle.dump(le, f)
+
+print("✅ Model trained and saved successfully (Scikit-Learn)!")

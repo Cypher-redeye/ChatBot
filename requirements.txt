@@ -3,7 +3,7 @@ flask-login
 requests
 gunicorn
 psycopg2-binary
-tensorflow
+scikit-learn
 nltk
 numpy
 colorama

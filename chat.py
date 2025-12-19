@@ -2,9 +2,7 @@ import random
 import os
 import json
 import pickle
-import numpy as np
-import tensorflow as tf
-from preprocessing import bag_of_words
+from preprocessing import clean_up_sentence # IMPT: Required for pickle loading
 
 # ---------------- LOAD INTENTS ----------------
 try:
@@ -18,42 +16,47 @@ except FileNotFoundError:
 
 # ---------------- LOAD MODEL & ARTIFACTS ----------------
 MODEL_PATHS = [
-    "chatbot_model.h5",
-    "src/chatbot_model.h5"
+    "chatbot_model.pkl",
+    "src/chatbot_model.pkl"
 ]
 
 model = None
-words = None
-classes = None
+le = None
 
 for path in MODEL_PATHS:
     if os.path.exists(path):
         base = os.path.dirname(path)
-        words = pickle.load(open(os.path.join(base, "words.pkl"), "rb"))
-        classes = pickle.load(open(os.path.join(base, "classes.pkl"), "rb"))
-        model = tf.keras.models.load_model(path)
-        print(f"DEBUG: Loaded model from {path}")
+        print(f"DEBUG: Loading models from {base}...")
+        with open(path, "rb") as f:
+            model = pickle.load(f)
+        with open(os.path.join(base, "label_encoder.pkl"), "rb") as f:
+            le = pickle.load(f)
+        print(f"DEBUG: Loaded Sklearn model from {path}")
         break
 
 if model is None:
-    raise FileNotFoundError("❌ Model files not found!")
+    raise FileNotFoundError("❌ Model files (chatbot_model.pkl) not found!")
 
 # ---------------- PREDICTION ----------------
 def predict_class(sentence):
-    bow = bag_of_words(sentence, words)
-
-    # LSTM expects (batch, timesteps, features)
-    bow = np.reshape(bow, (1, 1, len(bow)))
-
-    predictions = model.predict(bow, verbose=0)[0]
-
+    # Pipeline handles vectorization automatically
+    # We use predict_proba to get confidence scores
+    
+    # Sklearn expects a list/array of strings
+    probas = model.predict_proba([sentence])[0]
+    
+    # Get indices of top predictions
+    # We want to format this similar to the old output
     ERROR_THRESHOLD = 0.25
-    results = [
-        {"intent": classes[i], "probability": float(prob)}
-        for i, prob in enumerate(predictions)
-        if prob > ERROR_THRESHOLD
-    ]
-
+    
+    results = []
+    for idx, prob in enumerate(probas):
+        if prob > ERROR_THRESHOLD:
+            results.append({
+                "intent": le.inverse_transform([idx])[0],
+                "probability": float(prob)
+            })
+    
     results.sort(key=lambda x: x["probability"], reverse=True)
     return results
 
@@ -72,7 +75,8 @@ def get_response(intents_list, intents_json):
 
 # ---------------- CLI TEST ----------------
 if __name__ == "__main__":
-    print("🤖 Bot is running! (type 'quit' to exit)")
+    print("🤖 Bot is running! (Scikit-Learn Edition)")
+    print("Type 'quit' to exit")
 
     while True:
         message = input("You: ")
@@ -80,5 +84,8 @@ if __name__ == "__main__":
             break
 
         intents_list = predict_class(message)
+        # Debug print
+        # print(f"DEBUG intents: {intents_list}")
+        
         response = get_response(intents_list, intents)
         print("Bot:", response)
