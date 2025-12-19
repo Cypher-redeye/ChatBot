@@ -83,32 +83,16 @@ The application will start on `http://127.0.0.1:5000/`.
 
 ## 📸 Screenshots
 
-| Desktop View | Mobile View |
-|:---:|:---:|
-| ![Desktop Screenshot](https://via.placeholder.com/600x400?text=Desktop+UI+Placeholder) | ![Mobile Screenshot](https://via.placeholder.com/300x600?text=Mobile+UI+Placeholder) |
+Here is a glimpse of **PitStop-Assistant** in action:
 
-*(Replace these placeholders with actual screenshots of your application)*
+<div align="center">
+  <img src="static/screenshots/screenshot1.png" width="300" alt="Chat UI 1">
+  <img src="static/screenshots/screenshot2.png" width="300" alt="Chat UI 2">
+</div>
+<br>
+<div align="center">
+  <img src="static/screenshots/screenshot3.png" width="300" alt="Chat UI 3">
+  <img src="static/screenshots/screenshot4.png" width="300" alt="Chat UI 4">
+</div>
 
-## 🗺️ Roadmap
 
-- [ ] Integration with real-time car inventory APIs.
-- [ ] VIN decoding for automatic car detail entry.
-- [ ] Multi-language support for global marketplaces.
-- [ ] Advanced user dashboard for saving favorite cars.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-#### Tips for your GitHub Profile:
-*   **Add a Thumbnail**: Replace the placeholders above with actual screenshots.
-*   **Highlight the "Why"**: In your intro, mention if this was built for a specific dealership or as a solution to a common marketplace problem.
-*   **The "Live Link"**: Ensure the link to your Render site is at the top of your repo description so recruiters can test it immediately.
