@@ -1,25 +1,38 @@
 import nltk
-from nltk.stem import WordNetLemmatizer
 import numpy as np
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import wordpunct_tokenize
+
+# ---- Ensure required NLTK data (safe for Render) ----
+try:
+    nltk.data.find('corpora/wordnet')
+except LookupError:
+    nltk.download('wordnet')
+    nltk.download('omw-1.4')
 
 lemmatizer = WordNetLemmatizer()
 
-def clean_up_sentence(sentence):
-    """
-    Tokenize and lemmatize the sentence.
-    """
-    sentence_words = nltk.word_tokenize(sentence)
-    sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
-    return sentence_words
 
-def bag_of_words(sentence, words):
+def clean_up_sentence(sentence: str) -> list[str]:
     """
-    Return bag of words array: 0 or 1 for each word in the bag that exists in the sentence
+    Tokenize and lemmatize a sentence.
+    Uses wordpunct_tokenize to avoid heavy punkt dependency.
     """
-    sentence_words = clean_up_sentence(sentence)
-    bag = [0] * len(words)
-    for s in sentence_words:
-        for i, w in enumerate(words):
-            if w == s:
-                bag[i] = 1
-    return np.array(bag)
+    tokens = wordpunct_tokenize(sentence)
+    return [lemmatizer.lemmatize(token.lower()) for token in tokens]
+
+
+def bag_of_words(sentence: str, words: list[str]) -> np.ndarray:
+    """
+    Create a bag-of-words vector.
+    1 if word exists in sentence, else 0.
+    Optimized using set lookup.
+    """
+    sentence_words = set(clean_up_sentence(sentence))
+    bag = np.zeros(len(words), dtype=np.float32)
+
+    for idx, word in enumerate(words):
+        if word in sentence_words:
+            bag[idx] = 1.0
+
+    return bag
